@@ -6,7 +6,7 @@
     "scripts": {
         "db:introspect": "dotenv -- prisma introspect",
         "db:generate": "dotenv -- prisma generate",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "echo \"Error: no test specified\" && exit 0",
         "postinstall": "tsc && cp src/index.d.ts dist/index.d.ts && npx prisma@2.25.0 generate"
     },
     "keywords": [],
