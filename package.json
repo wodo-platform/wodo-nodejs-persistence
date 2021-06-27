@@ -11,7 +11,10 @@
     },
     "keywords": [],
     "author": "wodo-platform",
-    "repository": {},
+    "repository": "git@github.com:wodo-platform/wodo-nodejs-persistence.git",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
     "license": "ISC",
     "dependencies": {
         "@prisma/client": "2.25.0"
