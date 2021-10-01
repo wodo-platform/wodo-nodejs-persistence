@@ -6,6 +6,55 @@ As we developed more services we found that each of our services had its own ind
 To solve this we moved our reused Prisma Client as an internal package with organisation level scope. The package simply exports the context so that we can plug and play it into any of our projects.
 With this approach, making schema changes or updating Prisma versions is now as simple as releasing a new version of our internal package and updating the version used by the relevant projects. We don’t even need to have Prisma installed as a dependency in the other projects anymore. Hopefully the programming gods will forgive us now.
 
+
+## Generate Prisma artifacts
+
+
+To run the example with Prisma checkout branch `prisma`, remove the node_modules and run `npm install`
+
+Create a new mysql database with the name `nestjsrealworld-prisma` (or the name you specified in `prisma/.env`)
+
+Copy prisma config example file for database settings
+
+    cp prisma/.env.example prisma/.env
+
+Set mysql database settings in prisma/.env
+
+    DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
+
+To create all tables in the new database make the database migration from the prisma schema defined in prisma/schema.prisma
+
+    npx prisma migrate dev --name init 
+
+    or
+
+    npx prisma migrate save --experimental
+    npx prisma migrate up --experimental
+    
+This command does two things:
+
+It creates a new SQL migration file for this migration
+It runs the SQL migration file against the database
+
+Note: generate is called under the hood by default, after running prisma migrate dev. If the prisma-client-js generator is defined in your schema, this will check if @prisma/client is installed and install it if it's missing.
+
+    
+
+Now generate the prisma client from the migrated database with the following command
+
+    npx prisma generate
+
+The database tables are now set up and the prisma client is generated. For more information see the docs:
+
+- https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project-typescript-mysql
+
+To map your data model to the database schema, you need to use the prisma migrate CLI commands:
+
+
+
+
+
+
 ##  Publishing your package
 
 https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry

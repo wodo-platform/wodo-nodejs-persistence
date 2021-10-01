@@ -1,13 +1,13 @@
 {
     "name": "@wodo-platform/wodo-nodejs-persistence",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Shared prisma client for all nodejs based microservices,",
     "main": "index.js",
     "scripts": {
         "db:introspect": "dotenv -- prisma introspect",
         "db:generate": "dotenv -- prisma generate",
         "test": "echo \"Error: no test specified\" && exit 0",
-        "postinstall": "tsc && cp src/index.d.ts dist/index.d.ts && npx prisma@2.25.0 generate"
+        "postinstall": "tsc && cp src/index.d.ts dist/index.d.ts && npx prisma generate"
     },
     "keywords": [],
     "author": "wodo-platform",
@@ -17,12 +17,12 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@prisma/client": "2.25.0"
+        "@prisma/client": "^3.1.1"
     },
     "devDependencies": {
         "@types/node": "^15.12.5",
         "dotenv-cli": "^4.0.0",
-        "prisma": "^2.25.0",
+        "prisma": "^3.1.1",
         "ts-node": "^10.0.0",
         "typescript": "^4.3.4"
     }
