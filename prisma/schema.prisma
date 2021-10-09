@@ -10,6 +10,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+// test table
+
+model Test {
+  id            Int        @default(autoincrement()) @id
+  name          String     
+}
+
 // tenant service
 
 model Tenant {

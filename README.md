@@ -1,5 +1,7 @@
 # wodo-nodejs-persistence
 
+This is the only repository with prefix "wodo-" because it contains database schema definitions for both wodo-platform and wodo-gaming. It is a limitation of prisma ORM package. It generat3es data base clients with one unique nmae "PrismaClient" so that it is not possible to split the repository.
+
 https://isidoro-ferreiro.medium.com/share-your-prisma-client-across-projects-44d1c7aca6fd
 
 As we developed more services we found that each of our services had its own individual Prisma Client. And since all of our services are currently connected to the same database this wasn’t the cleanest solution. As you can imagine, whenever we made any database schema changes or even just updated our Prisma dependencies — this meant we had to repeat the same task multiple times. As programmers we couldn’t break the cardinal sin of staying DRY.
@@ -25,13 +27,6 @@ Set mysql database settings in prisma/.env
 To create all tables in the new database make the database migration from the prisma schema defined in prisma/schema.prisma
 
     npx prisma migrate dev --name init 
-
-    or
-
-    npx prisma migrate save --experimental
-    npx prisma migrate up --experimental
-    
-This command does two things:
 
 It creates a new SQL migration file for this migration
 It runs the SQL migration file against the database
