@@ -3,6 +3,9 @@
     "version": "1.0.13",
     "description": "Shared prisma client for all nodejs based microservices,",
     "main": "index.js",
+    "files": [ 
+        "dist/prisma/client/*" 
+    ],
     "scripts": {
         "db:introspect": "dotenv -- prisma introspect",
         "db:generate": "dotenv -- prisma generate",
