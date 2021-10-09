@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE `Demo` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191),
+    `name` VARCHAR(191) NOT NULL,
     `deleted` BOOLEAN NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191),
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
