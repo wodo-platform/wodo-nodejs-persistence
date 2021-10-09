@@ -61,7 +61,7 @@ Push your changes, you can now finally create a new package by creating a new re
 
 By default, GitHub Packages publishes a package in the GitHub repository you specify in the name field of the package.json file. For example, you would publish a package named @my-org/test to the my-org/test GitHub repository. You can set up the scope mapping for your project using either a local .npmrc file in the project or using the publishConfig option in the package.json. GitHub Packages only supports scoped npm packages. Scoped packages have names with the format of @owner/name. Scoped packages always begin with an @ symbol. You may need to update the name in your package.json to use the scoped name. For example, "name": "@codertocat/hello-world-npm".
 
-Version in the package.json file should match with the release tag version while releasing the proejct on the github
+Version in the package.json file should match with the release tag version while releasing the proejct on the github. It should be imcreased or changed in every release.
 
 ##  Adding wodo-nodejs-persistance dependency to other projects 
 
