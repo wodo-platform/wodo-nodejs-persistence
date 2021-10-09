@@ -11,11 +11,15 @@ generator client {
 }
 
 
-// test table
+// demo table
 
-model Test {
+model Demo {
   id            Int        @default(autoincrement()) @id
-  name          String     
+  name          String?    @unique
+  deleted       Boolean
+  description   String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())     
 }
 
 // tenant service
