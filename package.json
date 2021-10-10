@@ -1,13 +1,13 @@
 {
     "name": "@wodo-platform/wodo-nodejs-persistence",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "description": "Shared prisma client for all nodejs based microservices,",
     "main": "index.js",
     "scripts": {
         "db:introspect": "dotenv -- prisma introspect",
         "db:generate": "dotenv -- prisma generate",
         "test": "echo \"Error: no test specified\" && exit 0",
-        "postinstall": "npx prisma generate"
+        "lib-generate": "npx prisma generate"
     },
     "keywords": [],
     "author": "wodo-platform",
