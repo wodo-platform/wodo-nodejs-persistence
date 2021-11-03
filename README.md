@@ -1,4 +1,55 @@
-# wodo-nodejs-persistence
+<p align="center">
+  <a href="http://wodoplatform.io/" target="blank"><img src="../../../images/wodo_logo.png" width="320" alt="Wodo Platform" /></a>
+</p>
+
+<div align="center">
+<h2> Wodo NodeJS Persistence </h2>
+</div>
+
+<div align="center">
+  <h4>
+    <a href="#">
+      Website
+    </a>
+    <span> | </span>
+    <a href="#">
+      Product Docs
+    </a>
+    <span> | </span>
+    <a href="#">
+      Architecture Docs
+    </a>
+    <span> | </span>
+    <!-- <a href="#"> -->
+    <!--   CLI -->
+    <!-- </a> -->
+    <!-- <span> | </span> -->
+    <a href="#/CONTRIBUTING.md">
+      Contributing
+    </a>
+    <span> | </span>
+    <a href="#">
+      Reddit
+    </a>
+    <span> | </span>
+    <a href="#">
+      Twitter
+    </a>
+  </h4>
+</div>
+
+
+<h3> Table of Contents </h3> 
+
+- [Overview](#overview)
+- [Generate Prisma artifacts](#generate-prisma-artifacts)
+- [Publishing your package](#publishing-your-package)
+- [Adding wodo-nodejs-persistance dependency to other projects](#adding-wodo-nodejs-persistance-dependency-to-other-projects)
+
+
+---
+
+## Overview
 
 This is the only repository with prefix "wodo-" because it contains database schema definitions for both wodo-platform and wodo-gaming. It is a limitation of prisma ORM package. It generat3es data base clients with one unique nmae "PrismaClient" so that it is not possible to split the repository.
 

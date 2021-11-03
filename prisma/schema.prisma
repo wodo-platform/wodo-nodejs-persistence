@@ -38,7 +38,11 @@ model Tenant {
 }
 
 
-// -- end tenant servuce
+// -- end tenant service
+
+
+
+// -- wg-iam-service
 
 model User {
   id            Int         @default(autoincrement()) @id
@@ -104,6 +108,47 @@ model TransactionHistory {
   createdAt         DateTime    @default(now())
 }
 
+// -- wg-gaming-service
+
+model GamingFlow {
+  id            Int        @default(autoincrement()) @id
+  flow          Json     
+  deleted       Boolean
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())     
+}
+
+model GamingLounge {
+  id                Int         @default(autoincrement()) @id
+  type              Int
+  state             Int
+  gameTypeId        Int
+  assetId           Int
+  enterenceFee      Int
+  prize             Int
+  duration          Int
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now())
+}
+
+model GamingLoungeEventLog {
+  id                Int         @default(autoincrement()) @id
+  gamingLoungeId    Int
+  evetLog           Json
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now())
+}
+
+model GamingLoungeUser {
+  id                Int         @default(autoincrement()) @id
+  userId            Int
+  gameLoungeId      Int
+  gamerType         Int
+  enterenceFee      Int
+  joinedAt          DateTime    @default(now())
+  leftAt            DateTime    @default(now())
+}
+
 model GameServer {
   id                Int         @default(autoincrement()) @id
   type              Int
@@ -150,3 +195,5 @@ model GameServerUserData {
   joinedAt          DateTime    @default(now())
   leftAt            DateTime    @default(now())
 }
+
+// -- end wg-gaming-service

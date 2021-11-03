@@ -113,6 +113,57 @@ CREATE TABLE `TransactionHistory` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `GamingFlow` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `flow` JSON NOT NULL,
+    `deleted` BOOLEAN NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `GamingLounge` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `type` INTEGER NOT NULL,
+    `state` INTEGER NOT NULL,
+    `gameTypeId` INTEGER NOT NULL,
+    `assetId` INTEGER NOT NULL,
+    `enterenceFee` INTEGER NOT NULL,
+    `prize` INTEGER NOT NULL,
+    `duration` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `GamingLoungeEventLog` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `gamingLoungeId` INTEGER NOT NULL,
+    `evetLog` JSON NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `GamingLoungeUser` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `gameLoungeId` INTEGER NOT NULL,
+    `gamerType` INTEGER NOT NULL,
+    `enterenceFee` INTEGER NOT NULL,
+    `joinedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `leftAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `GameServer` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `type` INTEGER NOT NULL,
