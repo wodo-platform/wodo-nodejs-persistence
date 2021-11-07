@@ -133,6 +133,7 @@ CREATE TABLE `GamingLounge` (
     `enterenceFee` INTEGER NOT NULL,
     `prize` INTEGER NOT NULL,
     `duration` INTEGER NOT NULL,
+    `deleted` BOOLEAN NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -157,6 +158,7 @@ CREATE TABLE `GamingLoungeUser` (
     `gameLoungeId` INTEGER NOT NULL,
     `gamerType` INTEGER NOT NULL,
     `enterenceFee` INTEGER NOT NULL,
+    `deleted` BOOLEAN NOT NULL,
     `joinedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `leftAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
