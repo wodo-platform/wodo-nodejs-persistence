@@ -79,7 +79,7 @@ model Account {
   description   String
   address       String      @unique
   secret        String
-  keypair       String
+  publicKey     String
   balance       Int
   pending       Int
   enabled       Boolean
