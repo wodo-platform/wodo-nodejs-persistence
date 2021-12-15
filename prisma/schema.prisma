@@ -66,8 +66,8 @@ model Wallet {
   enabled       Boolean
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @default(now())
-  seed          String?
-  mnemonic      String?
+  seed          String
+  mnemonic      String
   deleted       Boolean
   //user          User        @relation("UserWallets", fields: [userId], references: [id])
   userId        Int
