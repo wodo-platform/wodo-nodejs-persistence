@@ -101,11 +101,11 @@ We build our own MySql docker image. All definition files are stored in "db" fol
 docker-compose.yaml file contains all definitions/configurations to run MySQL DB instance. Important configurations:
 
 - " build: ./db" --> Builds our own MySQL docker image using the files in db folder.
-- "command: --default-authentication-plugin=mysql_native_password" --> Adjust default auth type to "mysql_native_password" since MySQL 0.x version uses sha encrypted auth model by defaul. It is quick tweak to adjust the configuration
+- "command: --default-authentication-plugin=mysql_native_password" --> Adjust default auth type to "mysql_native_password" since MySQL 8.x version uses sha encrypted auth model by defaul. It is quick tweak to adjust the configuration
 - "env_file: ./.env" --> passing our main conf file to docker-compose. The confs are consolidated in one simple file.
-- " environment: .... "  --> Setting up root user password, creating wodo user with passowrd and creating default wodo database
+- " environment: .... "  --> Setting up root user password, creating wodo user with password and creating default wodo database
 - "ports: ... " --> Port forwarding from our local env to docker container
-- "volumes:" --> Creating persitence storage to not loose MySQL confs and data when we shut MySQL down
+- "volumes:" --> Creating persistance storage to not loose MySQL confs and data when we shut MySQL down
 
 To start MySQL instance, run the following command. It prints logs to console. To stop MySQL, just hit "ctrl+C"
 
@@ -115,18 +115,18 @@ docker-compose up
 
 You need to run this command in the project root directory where docker-compose.yaml file resides. You can keep your console running and continue development on other consoles.
 
-To validate MySql istance, run the following commands. It let you open a mysql command line session in the running docker container. First find out your running MySQL docker container name
+To validate MySql instance, run the following commands. It lets you open a mysql command line session in the running docker container. First find out your running MySQL docker container name
 
 ```bash 
 docker ps
 ```
-From the command output, copy the container name. In the sample case, it is "wodo-nodejs-persistence_mysqldb_1". It is used in the command below to initiate a MySQL command line session.
+From the command output, copy the container name. In the sample case, it is "wodo-nodejs-persistence_mysqldb_1". The value is used in the command below to instantiate a MySQL command line session.
 
 ```bash 
 docker container exec -it wodo-nodejs-persistence_mysqldb_1 mysql -u root -p
 ```
 
-Once you are connected to MySql command line, rune the following commands one by one. We need to give permission to our new user "wodo" to be able to run "prisma migrate" properly.
+Once you are connected to MySql command line, run the following commands one by one. We need to give permission to our new user "wodo" to be able to run "prisma migrate" properly.
 
 ```bash 
 GRANT ALL PRIVILEGES ON *.* to 'wodo'@'%';
@@ -139,7 +139,7 @@ Run exit command to terminate the sessiom
 exit;
 ```
 
-In case you need to wipe out everything and start over, run the following command. It will remove volumes and everything else.
+In case you need to wipe out everything and start over, run the following command. It will remove MySql confs, volumes and everything else.
 
 ```bash 
 docker-compose down -v
