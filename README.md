@@ -178,7 +178,7 @@ To create all tables in the new database make the database migration from the pr
 ```bash 
 npm run db:migrate
 ```
-The command invokes the line defined in package.json file. If you are doing an updatem you need 
+The command invokes the line defined in package.json file. If you are doing an update you need to change --name param value, init is not good anymore. 
 
 ```bash 
 "db:migrate": "dotenv -e ../.env -- npx prisma migrate dev --name init" 
