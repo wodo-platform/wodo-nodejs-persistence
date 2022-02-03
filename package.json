@@ -4,6 +4,7 @@
     "description": "Shared prisma client for all nodejs based microservices,",
     "main": "index.js",
     "scripts": {
+        "db:migrate": "dotenv -e ../.env -- npx prisma migrate dev --name init",
         "db:introspect": "dotenv -- prisma introspect",
         "db:generate": "dotenv -- prisma generate",
         "test": "echo \"Error: no test specified\" && exit 0",
@@ -21,7 +22,7 @@
     },
     "devDependencies": {
         "@types/node": "^15.12.5",
-        "dotenv-cli": "^4.0.0",
+        "dotenv-cli": "^4.1.1",
         "prisma": "^3.2.1",
         "ts-node": "^10.0.0",
         "typescript": "^4.3.4"

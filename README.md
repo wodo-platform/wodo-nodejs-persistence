@@ -71,32 +71,123 @@ As we developed more services we found that each of our services had its own ind
 To solve this we moved our reused Prisma Client as an internal package with organisation level scope. The package simply exports the context so that we can plug and play it into any of our projects.
 With this approach, making schema changes or updating Prisma versions is now as simple as releasing a new version of our internal package and updating the version used by the relevant projects. We don’t even need to have Prisma installed as a dependency in the other projects anymore. Hopefully the programming gods will forgive us now.
 
+<p>
+Prisma Migrate needs to connect a running MySQL instance in order to generate schema sql files. When you run "prisma migrate dev" to create a new migration, Prisma Migrate uses the shadow database to check that no manual changes have been made to the development database. For the first run, there is no dev database yet so that Prisma Migrate creates a shadow database, generate sql file and creates a final dev database that can be used in development process. More info: https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database
+</p>
+
+## Instantiate MySQL Instance for Development Purpose
+
+We use "docker-compose" to run MySQL instances locally. It is a more comprehensive way to leverage docker. All MySQL configurations are defined in ".env" in the project root directory. The same env file is used by "prisma migrate" which is explained in the next section. Ultimately we consolidate all required configurations in one simple env file.
+
+```bash 
+MYSQLDB_ROOT_USER=root
+MYSQLDB_ROOT_PASSWORD=password
+MYSQLDB_WODO_USER=wodo
+MYSQLDB_WODO_PASSWORD=123456
+MYSQLDB_WODO_DATABASE=wodo_db
+MYSQLDB_LOCAL_PORT=3306
+MYSQLDB_DOCKER_PORT=3306
+
+# in case node application is configured in the same docker-compose.yaml file.Not used at the moment in this repo
+NODE_LOCAL_PORT=3000
+NODE_DOCKER_PORT=3000 
+
+# prisma migarte DB url in the form of DATABASE_URL="mysql://$MYSQLDB_WODO_USER:$MYSQLDB_WODO_PASSWORD@localhost:$MYSQLDB_LOCAL_PORT/$MYSQLDB_WODO_DATABASE"
+DATABASE_URL="mysql://wodo:123456@127.0.0.1:3306/wodo_db"
+```
+
+We build our own MySql docker image. All definition files are stored in "db" folder. Docker Compose builds the docker image and instantiates it when "docker-compose up" command is executed.
+
+docker-compose.yaml file contains all definitions/configurations to run MySQL DB instance. Important configurations:
+
+- " build: ./db" --> Builds our own MySQL docker image using the files in db folder.
+- "command: --default-authentication-plugin=mysql_native_password" --> Adjust default auth type to "mysql_native_password" since MySQL 0.x version uses sha encrypted auth model by defaul. It is quick tweak to adjust the configuration
+- "env_file: ./.env" --> passing our main conf file to docker-compose. The confs are consolidated in one simple file.
+- " environment: .... "  --> Setting up root user password, creating wodo user with passowrd and creating default wodo database
+- "ports: ... " --> Port forwarding from our local env to docker container
+- "volumes:" --> Creating persitence storage to not loose MySQL confs and data when we shut MySQL down
+
+To start MySQL instance, run the following command. It prints logs to console. To stop MySQL, just hit "ctrl+C"
+
+```bash 
+docker-compose up
+```
+
+You need to run this command in the project root directory where docker-compose.yaml file resides. You can keep your console running and continue development on other consoles.
+
+To validate MySql istance, run the following commands. It let you open a mysql command line session in the running docker container. First find out your running MySQL docker container name
+
+```bash 
+docker ps
+```
+From the command output, copy the container name. In the sample case, it is "wodo-nodejs-persistence_mysqldb_1". It is used in the command below to initiate a MySQL command line session.
+
+```bash 
+docker container exec -it wodo-nodejs-persistence_mysqldb_1 mysql -u root -p
+```
+
+Once you are connected to MySql command line, rune the following commands one by one. We need to give permission to our new user "wodo" to be able to run "prisma migrate" properly.
+
+```bash 
+GRANT ALL PRIVILEGES ON *.* to 'wodo'@'%';
+flush privileges;
+```
+
+Run exit command to terminate the sessiom
+
+```bash 
+exit;
+```
+
+In case you need to wipe out everything and start over, run the following command. It will remove volumes and everything else.
+
+```bash 
+docker-compose down -v
+```
+
 
 ## Generate Prisma artifacts
 
+Prisma Migrate tool needs a running MySQL db instance. If you do not have one, please follow the instructions in the previous section. All required prisma commands are defined in "package.json" file as it is the main build and packaging tool.
 
-To run the example with Prisma checkout branch `prisma`, remove the node_modules and run `npm install`
+```json 
+    "scripts": {
+        "db:migrate": "dotenv -e ../.env -- npx prisma migrate dev --name init",
+        "db:introspect": "dotenv -- prisma introspect",
+        "db:generate": "dotenv -- prisma generate",
+        "test": "echo \"Error: no test specified\" && exit 0",
+        "lib-generate": "npx prisma generate"
+    },
+```
 
-Create a new mysql database with the name `nestjsrealworld-prisma` (or the name you specified in `prisma/.env`)
+".env" file in the project root directory contains the conf parameter "DATABASE_URL" that is needed by "prisma migrate" command. You need to set up correct values based on your definitions. 
 
-Copy prisma config example file for database settings
+```bash 
+DATABASE_URL="mysql://wodo:123456@127.0.0.1:3306/wodo_db"
+```
 
-    cp prisma/.env.example prisma/.env
+Note: If your DB user does not have proper rights to create a database, please run the following SQL commands with root user. Replace db user "wodo" with your db user.
 
-Set mysql database settings in prisma/.env
-
-    DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
+```bash 
+GRANT ALL PRIVILEGES ON *.* to 'wodo'@'%';
+flush privileges;
+```
 
 To create all tables in the new database make the database migration from the prisma schema defined in prisma/schema.prisma
 
-    npx prisma migrate dev --name init 
+```bash 
+npm run db:migrate
+```
+The command invokes the line defined in package.json file. If you are doing an updatem you need 
 
-It creates a new SQL migration file for this migration
-It runs the SQL migration file against the database
+```bash 
+"db:migrate": "dotenv -e ../.env -- npx prisma migrate dev --name init" 
+```
 
-Note: generate is called under the hood by default, after running prisma migrate dev. If the prisma-client-js generator is defined in your schema, this will check if @prisma/client is installed and install it if it's missing.
+It creates a new SQL migration file for this migration and runs the SQL migration file against your dev database that you defined within "MYSQLDB_WODO_USER" in ".env" file.
 
-    
+
+More info can be found at this link https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate
 
 Now generate the prisma client from the migrated database with the following command
 
@@ -105,9 +196,6 @@ Now generate the prisma client from the migrated database with the following com
 The database tables are now set up and the prisma client is generated. For more information see the docs:
 
 - https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project-typescript-mysql
-
-To map your data model to the database schema, you need to use the prisma migrate CLI commands:
-
 
 
 
