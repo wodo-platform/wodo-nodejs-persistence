@@ -3,7 +3,7 @@
 </p>
 
 <div align="center">
-<h2> Wodo NodeJS Persistence </h2>
+<h2> Wodo NodeJS Persistence Repo </h2>
 </div>
 
 <div align="center">
@@ -54,6 +54,7 @@
 <h3> Table of Contents </h3> 
 
 - [Overview](#overview)
+- [Instantiate MySQL Instance for Development Purpose](#instantiate-mysql-instance-for-development-purpose)
 - [Generate Prisma artifacts](#generate-prisma-artifacts)
 - [Publishing your package](#publishing-your-package)
 - [Adding wodo-nodejs-persistance dependency to other projects](#adding-wodo-nodejs-persistance-dependency-to-other-projects)
@@ -63,7 +64,7 @@
 
 ## Overview
 
-This is the only repository with prefix "wodo-" because it contains database schema definitions for both wodo-platform and wodo-gaming. It is a limitation of prisma ORM package. It generat3es data base clients with one unique nmae "PrismaClient" so that it is not possible to split the repository.
+This module contains database schema definitions for both wodo-platform and wodo-gaming. It is a limitation of prisma ORM package. It generat3es data base clients with one unique nmae "PrismaClient" so that it is not possible to split the repository.
 
 https://isidoro-ferreiro.medium.com/share-your-prisma-client-across-projects-44d1c7aca6fd
 
